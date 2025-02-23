@@ -1,0 +1,1 @@
+export const darkThemeClass: string = 'dark-theme'
