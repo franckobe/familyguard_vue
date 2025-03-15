@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura'
@@ -35,9 +35,37 @@ const MyTheme = definePreset(Aura, {
             800: '{indigo.800}',
             900: '{indigo.900}',
             950: '{indigo.950}'
+        },
+        accent: {
+            50: '{amber.50}',
+            100: '{amber.100}',
+            200: '{amber.200}',
+            300: '{amber.300}',
+            400: '{amber.400}',
+            500: '{amber.500}',
+            600: '{amber.600}',
+            700: '{amber.700}',
+            800: '{amber.800}',
+            900: '{amber.900}',
+            950: '{amber.950}'
         }
-    }
+    },
+    extendTheme: {
+        colors: {
+            accent: '{accent.500}',
+        },
+    },
+    extendPrime: {
+        button: {
+            accent: {
+                root: {
+                    class: 'bg-accent border-accent text-white hover:bg-accent-700',
+                },
+            },
+        },
+    },
 });
+
 app.use(PrimeVue, {
     theme: {
         preset: MyTheme,

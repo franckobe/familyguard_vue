@@ -1,5 +1,13 @@
 @import "tailwindcss";
+@import "tailwindcss-primeui";
+
+@theme inline {
+    --color-accent: var(--p-accent-500);
+    --color-accent-emphasis: var(--p-accent-hover-color);
+    --color-accent-emphasis-alt: var(--p-accent-active-color);
+    --color-accent-contrast: var(--p-accent-contrast-color);
+}
 
 :root {
-    font-family: Arial, Geneva, Tahoma, sans-serif;
+
 }
