@@ -1,22 +1,24 @@
 <script lang="ts" setup>
-
 import {isToday} from "../utils/calendarUtils.ts";
 
 defineProps<{
   calendarDay: Date,
   children: string[],
   isDifferentPeriod?: boolean
+  isSelected?: boolean
 }>();
 
 </script>
 
 <template>
   <div
-      class="flex flex-col items-center justify-center p-2 rounded cursor-pointer hover:bg-primary hover:text-primary-contrast transition border active:bg-primary-emphasis"
+      class="relative flex flex-col items-center justify-center p-2 rounded cursor-pointer transition border active:bg-primary-600 active:text-white"
       :class="{
                'border-transparent': !isToday(calendarDay),
                'border-accent': isToday(calendarDay),
                'text-muted-color': isDifferentPeriod,
+               'bg-primary-600 text-white': isSelected,
+               'hover:bg-primary hover:text-white': !isSelected
            }"
       v-tooltip.bottom="children.join(', ')"
   >

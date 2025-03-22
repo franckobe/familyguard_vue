@@ -1,10 +1,18 @@
 <script lang="ts" setup>
 import {computed, ref} from "vue";
-import type {CalendarEventModel} from "../utils/types/CalendarEventModel.ts";
 import {allMonths} from "../utils/constants.ts";
 import {getAllDaysInMonth} from "../utils/calendarUtils.ts";
 import CalendarCell from "./CalendarCell.vue";
 import CalendarTemplate from "./CalendarTemplate.vue";
+import type CalendarEvent from "../utils/types/CalendarEvent.ts";
+
+const emit = defineEmits<{
+  (e: 'periodChange', fromDate: Date, toDate: Date): void,
+  (e: 'dateSelected', date: Date): void,
+}>()
+const props = defineProps<{
+  calendarEvents: CalendarEvent[]
+}>();
 
 const previousMonth = () => {
   if (currentMonth.value <= 1) {
@@ -13,6 +21,7 @@ const previousMonth = () => {
   } else {
     currentMonth.value--;
   }
+  emitChange();
 }
 const nextMonth = () => {
   if (currentMonth.value >= 12) {
@@ -21,11 +30,23 @@ const nextMonth = () => {
   } else {
     currentMonth.value++;
   }
+  emitChange();
 }
 const initialMonth = () => {
   currentMonth.value = todayMonth;
   currentYear.value = todayYear;
+  if (currentMonth.value !== todayMonth || currentYear.value !== todayYear) {
+    emitChange();
+  }
 }
+const emitChange = () => {
+  emit("periodChange", allDaysInMonth.value[0], allDaysInMonth.value[allDaysInMonth.value.length - 1]);
+}
+const handleSelectedDate = (calendarSelectedDate: Date): void => {
+  selectedDate.value = selectedDate.value === calendarSelectedDate ? null : calendarSelectedDate;
+  emit('dateSelected', selectedDate.value)
+}
+
 const isDifferentMonth = (calendarDate: Date): boolean => {
   return calendarDate.getMonth() !== currentMonth.value - 1;
 }
@@ -34,25 +55,13 @@ const today = new Date();
 const todayMonth = today.getMonth() + 1;
 const todayYear = today.getFullYear();
 
-let currentMonth = ref<number>(todayMonth);
-let currentYear = ref<number>(todayYear);
-let monthEvents = ref<Array<CalendarEventModel>>([
-  {
-    fromDate: new Date(2025, 2, 11),
-    toDate: new Date(2025, 2, 12),
-    children: ['Emma', 'Zoé']
-  },
-  {
-    fromDate: new Date(2025, 2, 3),
-    toDate: new Date(2025, 2, 4),
-    children: ['Camille', 'Zoé']
-  },
-  {
-    fromDate: new Date(2025, 2, 25),
-    toDate: new Date(2025, 2, 27),
-    children: ['Louisa', 'Eve', 'Emma']
-  }
-]);
+const currentMonth = ref<number>(todayMonth);
+const currentYear = ref<number>(todayYear);
+const selectedDate = ref<Date|null>(null);
+
+const allDaysInMonth = computed(() => getAllDaysInMonth(currentMonth.value, currentYear.value));
+
+emitChange();
 
 // TODO
 const getDayChildren = (calendarDate: Date): string[] => {
@@ -61,12 +70,12 @@ const getDayChildren = (calendarDate: Date): string[] => {
 };
 const eventMap = computed(() => {
   const map = new Map<string, string[]>();
-  monthEvents.value.forEach(event => {
+  props.calendarEvents.forEach(event => {
     let currentDate = new Date(event.fromDate);
     while (currentDate <= event.toDate) {
       const key = currentDate.toISOString().split('T')[0]; // Clé au format YYYY-MM-DD
       if (!map.has(key)) map.set(key, []);
-      map.get(key)!.push(...event.children);
+      map.get(key)!.push(...event.getChildrenFirstnames());
       currentDate.setDate(currentDate.getDate() + 1);
     }
   });
@@ -82,10 +91,12 @@ const eventMap = computed(() => {
         @next-click="nextMonth()"
         @reset-click="initialMonth()"
     >
-      <CalendarCell v-for="calendarDay in getAllDaysInMonth(currentMonth, currentYear)"
+      <CalendarCell v-for="calendarDay in allDaysInMonth"
                     :calendarDay="calendarDay"
                     :children="getDayChildren(calendarDay)"
                     :is-different-period="isDifferentMonth(calendarDay)"
+                    :is-selected="calendarDay === selectedDate"
+                    @click="handleSelectedDate(calendarDay)"
       />
     </CalendarTemplate>
   </section>

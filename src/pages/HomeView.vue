@@ -5,9 +5,11 @@ import MonthCalendar from "../components/MonthCalendar.vue";
 import WeekCalendar from "../components/WeekCalendar.vue";
 import {CalendarType} from "../utils/enums.ts";
 import type {MenuItem} from "primevue/menuitem";
+import CalendarEventFixtures from "../utils/fixtures/CalendarEventFixtures.ts";
 
-let isDarkTheme = ref(false);
-let calendarType = ref<CalendarType>(CalendarType.monthly);
+const isDarkTheme = ref(true);
+switchTheme(isDarkTheme.value);
+const calendarType = ref<CalendarType>(CalendarType.monthly);
 const items = ref<MenuItem[]>([
   {
     label: 'Accueil',
@@ -20,6 +22,19 @@ const items = ref<MenuItem[]>([
     url: '/connexion'
   },
 ]);
+
+const fromDate = ref<Date | null>(null);
+const toDate = ref<Date | null>(null);
+const selectedDate = ref<Date | null>(null);
+
+const handlePeriodChange = (calendarFromDate: Date, calendarToDate: Date): void => {
+  fromDate.value = calendarFromDate;
+  toDate.value = calendarToDate;
+}
+const handleDateSelected = (calendarSelectedDate: Date|null): void => {
+  selectedDate.value = calendarSelectedDate;
+}
+
 </script>
 
 <template>
@@ -38,7 +53,11 @@ const items = ref<MenuItem[]>([
 
     <Panel>
       <template #header>
-        <h2 class="text-2xl">Calendrier</h2>
+        <div class="flex flex-col">
+          <h2 class="text-2xl">Calendrier</h2>
+          <h3 class="text-xl" v-if="fromDate && toDate">{{ fromDate.toLocaleDateString() }} - {{ toDate.toLocaleDateString()
+            }}</h3>
+        </div>
       </template>
       <template #icons>
         <SelectButton
@@ -46,8 +65,18 @@ const items = ref<MenuItem[]>([
             :options="Object.values(CalendarType)"
         />
       </template>
-      <MonthCalendar v-if="calendarType === CalendarType.monthly"/>
-      <WeekCalendar v-else-if="calendarType === CalendarType.weekly"/>
+      <MonthCalendar
+          v-if="calendarType === CalendarType.monthly"
+          :calendar-events="CalendarEventFixtures.getCalendarEvents()"
+          @period-change="handlePeriodChange"
+          @date-selected="handleDateSelected"
+      />
+      <WeekCalendar
+          v-else-if="calendarType === CalendarType.weekly"
+          :calendar-events="CalendarEventFixtures.getCalendarEvents()"
+          @period-change="handlePeriodChange"
+          @date-selected="handleDateSelected"
+      />
     </Panel>
 
   </section>

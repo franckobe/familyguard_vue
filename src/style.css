@@ -9,5 +9,8 @@
 }
 
 :root {
-
+    background-color: var(--color-surface-50);
+}
+:root.dark-theme {
+    background-color: var(--color-surface-950);
 }

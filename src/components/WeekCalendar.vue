@@ -1,11 +1,19 @@
 <script lang="ts" setup>
 import {computed, ref} from "vue";
-import type {CalendarEventModel} from "../utils/types/CalendarEventModel.ts";
 import {allMonths} from "../utils/constants.ts";
 import {getAllDaysInWeek, getWeekNumber} from "../utils/calendarUtils.ts";
 import {getISOWeeksInYear} from "date-fns";
 import CalendarCell from "./CalendarCell.vue";
 import CalendarTemplate from "./CalendarTemplate.vue";
+import type CalendarEvent from "../utils/types/CalendarEvent.ts";
+
+const emit = defineEmits<{
+  (e: 'periodChange', fromDate: Date, toDate: Date): void,
+  (e: 'dateSelected', date: Date): void,
+}>()
+const props = defineProps<{
+  calendarEvents: CalendarEvent[]
+}>();
 
 const previousWeek = () => {
   if (currentWeek.value <= 1) {
@@ -14,6 +22,7 @@ const previousWeek = () => {
   } else {
     currentWeek.value--;
   }
+  emitChange();
 };
 const nextWeek = () => {
   const weeksInYear = getISOWeeksInYear(new Date(currentYear.value, 0, 1));
@@ -23,38 +32,36 @@ const nextWeek = () => {
   } else {
     currentWeek.value++;
   }
+  emitChange();
 };
 const initialWeek = () => {
   currentWeek.value = todayWeekNumber;
   currentYear.value = todayYear;
+  if (currentWeek.value !== todayWeekNumber || currentYear.value !== todayYear) {
+    emitChange();
+  }
 };
+const emitChange = () => {
+  emit("periodChange", allDaysInWeek.value[0], allDaysInWeek.value[allDaysInWeek.value.length - 1]);
+}
+const handleSelectedDate = (calendarSelectedDate: Date): void => {
+  selectedDate.value = selectedDate.value === calendarSelectedDate ? null : calendarSelectedDate;
+  emit('dateSelected', selectedDate.value)
+}
 
 const today = new Date();
 const todayWeekNumber = getWeekNumber(today);
 const todayYear = today.getFullYear();
 
-let currentWeek = ref<number>(todayWeekNumber);
-let currentYear = ref<number>(todayYear);
-let monthEvents = ref<Array<CalendarEventModel>>([
-  {
-    fromDate: new Date(2025, 2, 11),
-    toDate: new Date(2025, 2, 12),
-    children: ['Emma', 'Zoé']
-  },
-  {
-    fromDate: new Date(2025, 2, 3),
-    toDate: new Date(2025, 2, 4),
-    children: ['Camille', 'Zoé']
-  },
-  {
-    fromDate: new Date(2025, 2, 25),
-    toDate: new Date(2025, 2, 27),
-    children: ['Louisa', 'Eve', 'Emma']
-  }
-]);
-let allDaysInWeek = computed(() => getAllDaysInWeek(currentWeek.value, currentYear.value));
-let startMonth = computed(() => allMonths[allDaysInWeek.value[0].getMonth()]);
-let endMonth = computed(() => allMonths[allDaysInWeek.value[6].getMonth()]);
+const currentWeek = ref<number>(todayWeekNumber);
+const currentYear = ref<number>(todayYear);
+const selectedDate = ref<Date|null>(null);
+
+const allDaysInWeek = computed(() => getAllDaysInWeek(currentWeek.value, currentYear.value));
+const startMonth = computed(() => allMonths[allDaysInWeek.value[0].getMonth()]);
+const endMonth = computed(() => allMonths[allDaysInWeek.value[6].getMonth()]);
+
+emitChange();
 
 // TODO
 const getDayChildren = (calendarDate: Date): string[] => {
@@ -63,12 +70,12 @@ const getDayChildren = (calendarDate: Date): string[] => {
 };
 const eventMap = computed(() => {
   const map = new Map<string, string[]>();
-  monthEvents.value.forEach(event => {
+  props.calendarEvents.forEach(event => {
     let currentDate = new Date(event.fromDate);
     while (currentDate <= event.toDate) {
       const key = currentDate.toISOString().split('T')[0]; // Clé au format YYYY-MM-DD
       if (!map.has(key)) map.set(key, []);
-      map.get(key)!.push(...event.children);
+      map.get(key)!.push(...event.getChildrenFirstnames());
       currentDate.setDate(currentDate.getDate() + 1);
     }
   });
@@ -87,6 +94,8 @@ const eventMap = computed(() => {
       <CalendarCell v-for="calendarDay in allDaysInWeek"
                     :calendarDay="calendarDay"
                     :children="getDayChildren(calendarDay)"
+                    :is-selected="calendarDay === selectedDate"
+                    @click="handleSelectedDate(calendarDay)"
       />
     </CalendarTemplate>
   </section>
