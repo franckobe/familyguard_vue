@@ -1,4 +1,4 @@
-import Parent from "../types/Parent.ts";
+import Parent from "../objects/Parent.ts";
 
 export default class ParentFixtures {
 

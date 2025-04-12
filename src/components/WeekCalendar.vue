@@ -5,11 +5,12 @@ import {getAllDaysInWeek, getWeekNumber} from "../utils/calendarUtils.ts";
 import {getISOWeeksInYear} from "date-fns";
 import CalendarCell from "./CalendarCell.vue";
 import CalendarTemplate from "./CalendarTemplate.vue";
-import type CalendarEvent from "../utils/types/CalendarEvent.ts";
+import type CalendarEvent from "../utils/objects/CalendarEvent.ts";
+import {getCalendarEventsByDays} from "../utils/calendarEventUtils.ts";
 
 const emit = defineEmits<{
   (e: 'periodChange', fromDate: Date, toDate: Date): void,
-  (e: 'dateSelected', date: Date): void,
+  (e: 'dateSelected', date: Date|null): void,
 }>()
 const props = defineProps<{
   calendarEvents: CalendarEvent[]
@@ -63,24 +64,10 @@ const endMonth = computed(() => allMonths[allDaysInWeek.value[6].getMonth()]);
 
 emitChange();
 
-// TODO
 const getDayChildren = (calendarDate: Date): string[] => {
-  const key = calendarDate.toISOString().split('T')[0];
-  return eventMap.value.get(key) || [];
+  const key = calendarDate.toLocaleDateString();
+  return getCalendarEventsByDays(props.calendarEvents)[key]?.map((calendarEvent: CalendarEvent) => calendarEvent.getChildrenFirstnames()).flat() || [];
 };
-const eventMap = computed(() => {
-  const map = new Map<string, string[]>();
-  props.calendarEvents.forEach(event => {
-    let currentDate = new Date(event.fromDate);
-    while (currentDate <= event.toDate) {
-      const key = currentDate.toISOString().split('T')[0]; // Clé au format YYYY-MM-DD
-      if (!map.has(key)) map.set(key, []);
-      map.get(key)!.push(...event.getChildrenFirstnames());
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-  });
-  return map;
-});
 </script>
 
 <template>

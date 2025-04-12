@@ -1,5 +1,5 @@
-import Child from "../types/Child.ts";
-import Parent from "../types/Parent.ts";
+import Child from "../objects/Child.ts";
+import Parent from "../objects/Parent.ts";
 import ParentFixtures from "./ParentFixtures.ts";
 
 export default class ChildFixtures {
