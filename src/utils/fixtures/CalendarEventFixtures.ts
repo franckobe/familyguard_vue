@@ -5,10 +5,10 @@ import ChildFixtures from "./ChildFixtures.ts";
 export default class CalendarEventFixtures {
 
     private static calendarEvents: CalendarEvent[] = [
-        new CalendarEvent(1, new Date(2025, 2, 11, 8), new Date(2025, 2, 11, 18), []),
-        new CalendarEvent(2, new Date(2025, 2, 3, 18), new Date(2025, 2, 4, 16), []),
-        new CalendarEvent(3, new Date(2025, 2, 25, 18), new Date(2025, 2, 27, 10), []),
-        new CalendarEvent(4, new Date(2025, 2, 25, 16), new Date(2025, 2, 25, 20), []),
+        new CalendarEvent(1, new Date(2025, 3, 11, 8), new Date(2025, 3, 11, 18), [], 'Chez Mamina'),
+        new CalendarEvent(2, new Date(2025, 3, 3, 18), new Date(2025, 3, 4, 16), [], 'Chez Mamina'),
+        new CalendarEvent(3, new Date(2025, 3, 25, 18), new Date(2025, 3, 27, 10), [], 'Chez Mamina'),
+        new CalendarEvent(4, new Date(2025, 3, 25, 16), new Date(2025, 3, 25, 20), [], 'Chez Papino'),
     ];
 
     public static getOneCalendarEvent(): CalendarEvent {
