@@ -7,7 +7,11 @@ export default class CalendarEventApi {
         if (fromDate === null || toDate === null) {
             return [];
         }
-        return CalendarEventFixtures.getCalendarEvents().filter((event: CalendarEvent) => event.fromDate <= toDate && event.toDate >= fromDate);
+        return CalendarEventFixtures.getCalendarEvents().filter((event: CalendarEvent) => event.fromDate! <= toDate && event.toDate! >= fromDate);
+    }
+
+    static create(calendarEvent: CalendarEvent): CalendarEvent {
+        return CalendarEventFixtures.add(calendarEvent);
     }
 
 }

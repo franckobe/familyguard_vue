@@ -52,14 +52,14 @@ const onSubmit = (formSubmitEvent: FormSubmitEvent) => {
         <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">{{ $form.password.error.message }}</Message>
       </div>
       <Button label="Connexion" size="large" type="submit" />
-      <RouterLink to="/mot-de-passe-oublie" class="self-end">
+      <RouterLink :to="{name: 'forgotPassword'}" class="self-end">
         <Button label="Mot de passe oublié ?" variant="link" />
       </RouterLink>
     </Form>
     <Divider />
     <div class="w-full flex gap-3 items-center justify-center">
       <span>Pas encore inscrit ?</span>
-      <RouterLink to="/inscription">
+      <RouterLink :to="{name: 'signup'}">
         <Button variant="outlined" label="Créer un compte"/>
       </RouterLink>
     </div>

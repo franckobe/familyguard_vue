@@ -65,7 +65,7 @@ const onSubmit = (formSubmitEvent: FormSubmitEvent) => {
     <Divider />
     <div class="w-full flex gap-3 items-center justify-center">
       <span>Déjà inscrit ?</span>
-      <RouterLink to="/connexion">
+      <RouterLink :to="{name: 'login'}">
         <Button variant="outlined" label="Se connecter"/>
       </RouterLink>
     </div>

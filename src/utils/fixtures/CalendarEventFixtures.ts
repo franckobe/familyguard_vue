@@ -11,10 +11,6 @@ export default class CalendarEventFixtures {
         new CalendarEvent(4, new Date(2025, 3, 25, 16), new Date(2025, 3, 25, 20), [], 'Chez Papino'),
     ];
 
-    public static getOneCalendarEvent(): CalendarEvent {
-        return this.calendarEvents[0];
-    }
-
     public static getCalendarEvents(): CalendarEvent[] {
         const children: Child[] = ChildFixtures.getChildren();
         const dispatch: {[index: string]: number[]} = {
@@ -23,12 +19,18 @@ export default class CalendarEventFixtures {
             '3': [2,3,5],
             '4': [1],
         };
-        this.calendarEvents.sort((a, b) => a.fromDate.getTime() - b.fromDate.getTime()).forEach(calendarEvent => {
+        this.calendarEvents.sort((a, b) => a.fromDate!.getTime() - b.fromDate!.getTime()).forEach(calendarEvent => {
             calendarEvent.children = children.filter(child => {
-                return dispatch[calendarEvent.id.toString()].includes(child.id);
+                return dispatch[calendarEvent.id!.toString()].includes(child.id);
             });
         });
         return this.calendarEvents;
+    }
+
+    public static add(calendarEvent: CalendarEvent): CalendarEvent {
+        calendarEvent.id = this.calendarEvents.length + 1;
+        this.calendarEvents.push(calendarEvent);
+        return calendarEvent;
     }
 
 }

@@ -5,6 +5,7 @@ import Aura from '@primeuix/themes/aura'
 import Tooltip from 'primevue/tooltip';
 import ToastService from 'primevue/toastservice';
 import {darkThemeClass} from "./utils/constants.ts";
+import { fr } from "primelocale/js/fr.js";
 /* Styling */
 import './style.css'
 import 'primeicons/primeicons.css'
@@ -72,7 +73,8 @@ app.use(PrimeVue, {
         options: {
             darkModeSelector: `.${darkThemeClass}`,
         }
-    }
+    },
+    locale: fr
 })
 app.use(router)
 app.use(ToastService)
