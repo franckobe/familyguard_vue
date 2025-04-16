@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import {switchTheme} from "../utils/utils.ts";
 import type {MenuItem} from "primevue/menuitem";
 import {ref} from "vue";
 import DrawerTemplate from "../components/DrawerTemplate.vue";
+import ThemeToggleSwitch from "../components/ThemeToggleSwitch.vue";
 
-const isDarkTheme = ref(true);
-switchTheme(isDarkTheme.value);
 const items = ref<MenuItem[]>([
   {
     label: 'Accueil',
@@ -30,11 +28,7 @@ const items = ref<MenuItem[]>([
     <Menubar :model="items">
       <template #end>
         <div class="flex items-center">
-          <ToggleSwitch v-model="isDarkTheme" @change="switchTheme(isDarkTheme)">
-            <template #handle="{ checked }">
-              <i :class="['pi pi-sm', { 'pi-moon': checked, 'pi-sun': !checked }]"/>
-            </template>
-          </ToggleSwitch>
+          <ThemeToggleSwitch />
         </div>
       </template>
     </Menubar>

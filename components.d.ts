@@ -36,6 +36,7 @@ declare module 'vue' {
     Row: typeof import('primevue/row')['default']
     SelectButton: typeof import('primevue/selectbutton')['default']
     Sidebar: typeof import('primevue/sidebar')['default']
+    ThemeToggleSwitch: typeof import('./src/components/ThemeToggleSwitch.vue')['default']
     Timeline: typeof import('primevue/timeline')['default']
     Toast: typeof import('primevue/toast')['default']
     ToggleSwitch: typeof import('primevue/toggleswitch')['default']

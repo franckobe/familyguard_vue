@@ -15,11 +15,14 @@ import './assets/style/toast.css'
 import {createRouter, createWebHistory} from "vue-router";
 import {definePreset} from "@primeuix/themes";
 import {routes} from "./router/AppRoutes.ts";
+import {createPinia} from "pinia";
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
 })
+
+const pinia = createPinia();
 
 const app = createApp(App)
 const MyTheme = definePreset(Aura, {
@@ -75,8 +78,9 @@ app.use(PrimeVue, {
         }
     },
     locale: fr
-})
-app.use(router)
-app.use(ToastService)
+});
+app.use(pinia);
+app.use(router);
+app.use(ToastService);
 app.directive('tooltip', Tooltip);
 app.mount('#app')
