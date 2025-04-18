@@ -1,14 +1,12 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {useThemeStore} from "./utils/store/ThemeStore.ts";
 
 useThemeStore();
 </script>
 
 <template>
-  <Toast />
-  <RouterView />
+    <Toast />
+    <RouterView />
 </template>
 
-<style scoped>
 
-</style>

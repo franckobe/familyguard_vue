@@ -2,46 +2,57 @@
 import {allDaysShort} from "../utils/constants.ts";
 
 defineProps<{
-  title: string,
+    title: string;
 }>();
 
 defineEmits<{
-  previousClick: [];
-  nextClick: [];
-  resetClick: [];
+    previousClick: [];
+    nextClick: [];
+    resetClick: [];
 }>();
 </script>
 
 <template>
-  <div class="flex items-center justify-center pb-2 gap-2">
-    <Button icon="pi pi-chevron-left"
+    <div
+        class="flex items-center justify-center pb-2 gap-2"
+    >
+        <Button
+            icon="pi pi-chevron-left"
             severity="secondary"
             size="small"
             variant="text"
             @click="() => $emit('previousClick')"
-    />
-    <span class="min-w-[15ch] inline-block text-center">
-      {{ title }}
-    </span>
-    <Button icon="pi pi-calendar"
+        />
+        <span
+            class="min-w-[15ch] inline-block text-center"
+        >
+            {{ title }}
+        </span>
+        <Button
+            icon="pi pi-calendar"
             severity="secondary"
             size="small"
             variant="outlined"
             @click="() => $emit('resetClick')"
-    />
-    <Button icon="pi pi-chevron-right"
+        />
+        <Button
+            icon="pi pi-chevron-right"
             severity="secondary"
             size="small"
             variant="text"
             @click="() => $emit('nextClick')"
-    />
-  </div>
-  <div class="grid w-full grid-cols-7 gap-1">
-    <div v-for="dayShort in allDaysShort"
-         class="text-center font-semibold"
-    >
-      {{ dayShort }}
+        />
     </div>
-    <slot/>
-  </div>
+    <div
+        class="grid w-full grid-cols-7 gap-1"
+    >
+        <div
+            v-for="dayShort in allDaysShort"
+            :key="dayShort"
+            class="text-center font-semibold"
+        >
+            {{ dayShort }}
+        </div>
+        <slot />
+    </div>
 </template>

@@ -1,12 +1,15 @@
 .pi-xs {
     font-size: calc(var(--p-icon-size) * 0.5) !important;
 }
+
 .pi-sm {
     font-size: calc(var(--p-icon-size) * 0.75) !important;
 }
+
 .pi-xl {
     font-size: calc(var(--p-icon-size) * 1.5) !important;
 }
+
 .pi-2xl {
     font-size: calc(var(--p-icon-size) * 2) !important;
 }

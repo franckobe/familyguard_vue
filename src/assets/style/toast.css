@@ -1,6 +1,7 @@
 .p-toast-message-content {
     align-items: center !important;
 }
+
 .p-toast-detail:empty {
     display: none;
 }

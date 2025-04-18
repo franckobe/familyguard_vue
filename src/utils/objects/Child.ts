@@ -4,6 +4,7 @@ export default class Child {
         public firstname: string,
         public lastname: string,
         public birthdate: Date,
-        public parents: Array<any>) {
+        public parents: Array<any>,
+    ) {
     }
 }

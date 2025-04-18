@@ -6,25 +6,25 @@ import CalendarView from "../pages/CalendarView.vue";
 export const routes: Readonly<RouteRecordRaw[]> = [
     ...anonymRoutes,
     {
-        path: '/',
+        path: "/",
         component: HomeView,
         children: [
             {
-                path: '',
-                name: 'home',
+                path: "",
+                name: "home",
                 components: {
                     default: HomeView,
                     secondary: CalendarView,
                 },
             },
             {
-                path: 'calendrier',
-                name: 'calendar',
+                path: "calendrier",
+                name: "calendar",
                 components: {
                     default: HomeView,
                     secondary: CalendarView,
-                }
+                },
             },
-        ]
+        ],
     },
-]
+];

@@ -6,12 +6,12 @@ import {
     getWeek,
     startOfISOWeek,
     startOfMonth,
-    startOfWeek
+    startOfWeek,
 } from "date-fns";
 
 export const isToday = (calendarDate: Date): boolean => {
     return calendarDate.toLocaleDateString() === new Date().toLocaleDateString();
-}
+};
 
 export const getAllDaysInMonth = (month: number, year: number): Date[] => {
     const firstDay = startOfMonth(new Date(year, month - 1));
@@ -26,12 +26,12 @@ export const getAllDaysInWeek = (week: number, year: number) => {
     const mondayOfWeek = addDays(firstMonday, (week - 1) * 7);
     return eachDayOfInterval({
         start: mondayOfWeek,
-        end: addDays(mondayOfWeek, 6)
+        end: addDays(mondayOfWeek, 6),
     });
 };
 
 export const getWeekNumber = (date: Date): number => {
     return getWeek(date, {
-        weekStartsOn: 1
+        weekStartsOn: 1,
     });
 };
