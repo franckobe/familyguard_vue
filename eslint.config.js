@@ -82,6 +82,10 @@ export default [
             "vue/script-indent": ["error", 4, {"baseIndent": 0}],
             "vue/html-indent": ["error", 4, {"baseIndent": 1}],
             "vue/html-comment-indent": ["error", 4],
+            'vue/no-undef-components': ['error', { ignorePatterns: ['RouterView', 'RouterLink'] }],
+            'import/no-unresolved': 'error',
+            'import/no-named-as-default-member': 'error',
+            'no-undef': 'error',
             "no-unused-vars": "off",
             "unused-imports/no-unused-imports": "error",
             "unused-imports/no-unused-vars": [

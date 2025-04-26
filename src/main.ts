@@ -16,6 +16,10 @@ import {createRouter, createWebHistory} from "vue-router";
 import {definePreset} from "@primeuix/themes";
 import {routes} from "./router/AppRoutes.ts";
 import {createPinia} from "pinia";
+import {ClassRegistry} from "./utils/objects/ClassRegistry.ts";
+import User from "./utils/objects/User.ts";
+import Child from "./utils/objects/Child.ts";
+import CalendarEvent from "./utils/objects/CalendarEvent.ts";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -84,3 +88,7 @@ app.use(router);
 app.use(ToastService);
 app.directive("tooltip", Tooltip);
 app.mount("#app");
+
+ClassRegistry.register("User", User.fromJson);
+ClassRegistry.register("Child", Child.fromJson);
+ClassRegistry.register("CalendarEvent", CalendarEvent.fromJson);

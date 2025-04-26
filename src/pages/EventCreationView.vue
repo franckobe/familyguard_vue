@@ -20,9 +20,12 @@ const props = defineProps<{
 
 const newEvent = ref<CalendarEvent>(new CalendarEvent());
 const childrenField = computed(() => newEvent.value.children.length);
+const availableChildren = ref<Child[]>([]);
 
-const availableChildren: Child[] = ChildApi.getMyChildren();
-newEvent.value.children = [...availableChildren];
+new ChildApi().getMyChildren().then(children => {
+    newEvent.value.children = [...children];
+    availableChildren.value = [...children];
+});
 
 const resolver = ref(
     validator.yupResolver(
@@ -57,7 +60,7 @@ const handleChildSelection = (child: Child) => {
 };
 const handleFormSubmit = (formSubmitEvent: FormSubmitEvent) => {
     if (formSubmitEvent.valid) {
-        if (CalendarEventApi.create(newEvent.value)) {
+        if (new CalendarEventApi().create(newEvent.value)) {
             toast.success("Evènement créé");
             drawerStore.close();
         } else {
@@ -78,7 +81,7 @@ const handleFormSubmit = (formSubmitEvent: FormSubmitEvent) => {
         </template>
         <Form
             v-slot="$form"
-            :resolver
+            :resolver="resolver"
             class="flex flex-col gap-4"
             @submit="handleFormSubmit"
         >

@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "firstName": "Franck",
+    "lastName": "Gados",
+    "email": "test@gmail.com",
+    "roles": [
+      "parent"
+    ]
+  },
+  {
+    "id": 2,
+    "firstName": "Aude",
+    "lastName": "Kerdeven",
+    "email": "test@gmail.com",
+    "roles": [
+      "parent"
+    ]
+  },
+  {
+    "id": 3,
+    "firstName": "Julien",
+    "lastName": "Gados",
+    "email": "test@gmail.com",
+    "roles": [
+      "parent"
+    ]
+  },
+  {
+    "id": 4,
+    "firstName": "Sarah",
+    "lastName": "Gados",
+    "email": "test@gmail.com",
+    "roles": [
+      "parent"
+    ]
+  },
+  {
+    "id": 5,
+    "firstName": "Julie",
+    "lastName": "Minot",
+    "email": "test@gmail.com",
+    "roles": [
+      "parent"
+    ]
+  },
+  {
+    "id": 6,
+    "firstName": "Florent",
+    "lastName": "Minot",
+    "email": "test@gmail.com",
+    "roles": [
+      "parent"
+    ]
+  },
+  {
+    "id": 7,
+    "firstName": "Sabrina",
+    "lastName": "Gados",
+    "email": "test@gmail.com",
+    "roles": [
+      "sitter"
+    ]
+  },
+  {
+    "id": 8,
+    "firstName": "Georges",
+    "lastName": "Gados",
+    "email": "test@gmail.com",
+    "roles": [
+      "sitter"
+    ]
+  },
+  {
+    "id": 9,
+    "firstName": "Michel",
+    "lastName": "Kerdeven",
+    "email": "test@gmail.com",
+    "roles": [
+      "sitter"
+    ]
+  },
+  {
+    "id": 10,
+    "firstName": "Louis",
+    "lastName": "Kerdeven",
+    "email": "test@gmail.com",
+    "roles": [
+      "sitter"
+    ]
+  }
+]

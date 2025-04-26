@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import {CalendarType, DrawerRegistry} from "../utils/enums.ts";
 import {format} from "date-fns";
-import MonthCalendar from "../components/MonthCalendar.vue";
-import WeekCalendar from "../components/WeekCalendar.vue";
 import {computed, type ComputedRef, ref} from "vue";
 import CalendarEvent from "../utils/objects/CalendarEvent.ts";
 import CalendarEventApi from "../api/CalendarEventApi.ts";
 import type {CalendarEventsByDays} from "../utils/types/CalendarEventsByDays.ts";
 import {getCalendarEventsByDays} from "../utils/calendarEventUtils.ts";
 import {useDrawerStore} from "../utils/store/DrawerStore.ts";
+import MonthCalendar from "../components/calendar/MonthCalendar.vue";
+import WeekCalendar from "../components/calendar/WeekCalendar.vue";
 
 const drawerStore = useDrawerStore();
 
@@ -16,22 +16,21 @@ const calendarType = ref<CalendarType>(CalendarType.monthly);
 const fromDate = ref<Date | null>(null);
 const toDate = ref<Date | null>(null);
 const selectedDate = ref<Date | null>(null);
+const calendarEvents = ref<CalendarEvent[]>([]);
 
-const handlePeriodChange = (
+const handlePeriodChange = async (
     calendarFromDate: Date,
     calendarToDate: Date,
-): void => {
+): Promise<void> => {
     fromDate.value = calendarFromDate;
     toDate.value = calendarToDate;
     selectedDate.value = null;
+    calendarEvents.value = await new CalendarEventApi().getAllInPeriod(fromDate.value, toDate.value);
 };
 const handleDateSelected = (calendarSelectedDate: Date | null): void => {
     selectedDate.value = calendarSelectedDate;
 };
 
-const calendarEvents: ComputedRef<CalendarEvent[]> = computed(() =>
-    CalendarEventApi.getAllInPeriod(fromDate.value, toDate.value),
-);
 const calendarEventsByDays: ComputedRef<CalendarEventsByDays> = computed(() =>
     getCalendarEventsByDays(calendarEvents.value),
 );

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {allDaysShort} from "../utils/constants.ts";
+import {allDaysShort} from "../../utils/constants.ts";
 
 defineProps<{
     title: string;

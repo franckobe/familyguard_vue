@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {isToday} from "../utils/calendarUtils.ts";
+import {isToday} from "../../utils/calendarUtils.ts";
 
 defineProps<{
     calendarDay: Date;

@@ -1,21 +1,25 @@
 import type CalendarEvent from "../utils/objects/CalendarEvent.ts";
-import CalendarEventFixtures from "../utils/fixtures/CalendarEventFixtures.ts";
+import ApiClient from "./ApiClient.ts";
 
-export default class CalendarEventApi {
-    static getAllInPeriod(
+export default class CalendarEventApi extends ApiClient {
+    async getAllInPeriod(
         fromDate: Date | null,
         toDate: Date | null,
-    ): CalendarEvent[] {
+    ): Promise<CalendarEvent[]> {
         if (fromDate === null || toDate === null) {
             return [];
         }
-        return CalendarEventFixtures.getCalendarEvents().filter(
+
+        const calendarEvents = await this.get<CalendarEvent[]>('/fixtures/eventFixture.json', 'CalendarEvent');
+
+        return calendarEvents.filter(
             (event: CalendarEvent) =>
                 event.fromDate! <= toDate && event.toDate! >= fromDate,
         );
     }
 
-    static create(calendarEvent: CalendarEvent): CalendarEvent {
-        return CalendarEventFixtures.add(calendarEvent);
+    public create(calendarEvent: CalendarEvent): boolean {
+        console.log(calendarEvent);
+        return true;
     }
 }

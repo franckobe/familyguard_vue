@@ -1,4 +1,6 @@
-import type Child from "./Child.ts";
+import Child from "./Child.ts";
+import User from "./User.ts";
+import {EventStatus} from "../enums.ts";
 
 export default class CalendarEvent {
     constructor(
@@ -7,6 +9,8 @@ export default class CalendarEvent {
         public toDate: Date | null = null,
         public children: Child[] = [],
         public location: string | null = null,
+        public sitter: User | null = null,
+        public status: EventStatus = EventStatus.PENDING,
     ) {
     }
 
@@ -33,5 +37,16 @@ export default class CalendarEvent {
 
     hasNextDay(dayStr: string): boolean {
         return this.toDate?.toLocaleDateString() !== dayStr;
+    }
+
+    static fromJson(json: any): CalendarEvent {
+        return new CalendarEvent(
+            json.id ?? null,
+            json.fromDate ? new Date(json.fromDate) : null,
+            json.toDate ? new Date(json.toDate) : null,
+            json.children?.map(Child.fromJson) ?? [],
+            json.location ?? null,
+            json.sitter ? User.fromJson(json.sitter) : null
+        );
     }
 }

@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import {computed, ref} from "vue";
-import {allMonths} from "../utils/constants.ts";
-import {getAllDaysInWeek, getWeekNumber} from "../utils/calendarUtils.ts";
+import {allMonths} from "../../utils/constants.ts";
+import {getAllDaysInWeek, getWeekNumber} from "../../utils/calendarUtils.ts";
 import {getISOWeeksInYear} from "date-fns";
 import CalendarCell from "./CalendarCell.vue";
 import CalendarTemplate from "./CalendarTemplate.vue";
-import type CalendarEvent from "../utils/objects/CalendarEvent.ts";
-import {getCalendarEventsByDays} from "../utils/calendarEventUtils.ts";
+import type CalendarEvent from "../../utils/objects/CalendarEvent.ts";
+import {getCalendarEventsByDays} from "../../utils/calendarEventUtils.ts";
 
 const emit = defineEmits<{
     (e: "periodChange", fromDate: Date, toDate: Date): void;
