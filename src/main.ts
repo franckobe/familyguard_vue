@@ -10,6 +10,7 @@ import {fr} from "primelocale/js/fr.js";
 import "./style.css";
 import "primeicons/primeicons.css";
 import "./assets/style/icons.css";
+import "./assets/style/buttons.css";
 import "./assets/style/toast.css";
 
 import {createRouter, createWebHistory} from "vue-router";
@@ -20,10 +21,23 @@ import {ClassRegistry} from "./utils/objects/ClassRegistry.ts";
 import User from "./utils/objects/User.ts";
 import Child from "./utils/objects/Child.ts";
 import CalendarEvent from "./utils/objects/CalendarEvent.ts";
+import {useAuthStore} from "./utils/store/AuthStore.ts";
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
+});
+
+router.beforeEach((to, _, next) => {
+    const authStore = useAuthStore();
+    console.log(to.meta);
+    if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+        next({ name: 'login' });
+    } else if (to.name === 'login' && authStore.isAuthenticated) {
+        next({ name: 'home' });
+    } else {
+        next();
+    }
 });
 
 const pinia = createPinia();

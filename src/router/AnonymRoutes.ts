@@ -4,8 +4,16 @@ import ForgotPasswordView from "../pages/ForgotPasswordView.vue";
 import type {RouteRecordRaw} from "vue-router";
 
 export const anonymRoutes: RouteRecordRaw[] = [
-    {path: "/connexion", name: "login", component: LoginView},
-    {path: "/inscription", name: "signup", component: SignupView},
+    {
+        path: "/connexion",
+        name: "login",
+        component: LoginView
+    },
+    {
+        path: "/inscription",
+        name: "signup",
+        component: SignupView
+    },
     {
         path: "/mot-de-passe-oublie",
         name: "forgotPassword",

@@ -7,6 +7,9 @@ import type {LoginFormModel} from "../utils/types/LoginFormModel.ts";
 import {useRouter} from "vue-router";
 import {useCustomToast} from "../services/ToastService.ts";
 import AnonymFormContainer from "../components/AnonymFormContainer.vue";
+import {useAuthStore} from "../utils/store/AuthStore.ts";
+import User from "../utils/objects/User.ts";
+import {UserRole} from "../utils/enums.ts";
 
 const router = useRouter();
 const toast = useCustomToast();
@@ -31,6 +34,8 @@ const resolver = ref(
 const onSubmit = (formSubmitEvent: FormSubmitEvent) => {
     if (formSubmitEvent.valid) {
         toast.success("Bienvenue");
+      const authStore = useAuthStore();
+      authStore.login(new User(1, "Franck", "Gados", "franck@gmail.com", [UserRole.PARENT]));
         router.replace("/");
     } else {
         toast.error("Formulaire invalide");

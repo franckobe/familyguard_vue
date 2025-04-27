@@ -8,10 +8,16 @@ export const routes: Readonly<RouteRecordRaw[]> = [
     {
         path: "/",
         component: HomeView,
+        meta: {
+            requiresAuth: true,
+        },
         children: [
             {
                 path: "",
                 name: "home",
+                meta: {
+                    requiresAuth: true,
+                },
                 components: {
                     default: HomeView,
                     secondary: CalendarView,
@@ -20,6 +26,9 @@ export const routes: Readonly<RouteRecordRaw[]> = [
             {
                 path: "calendrier",
                 name: "calendar",
+                meta: {
+                    requiresAuth: true,
+                },
                 components: {
                     default: HomeView,
                     secondary: CalendarView,

@@ -1,0 +1,5 @@
+@layer components {
+    .p-button-dashed {
+        @apply !bg-transparent hover:!bg-current/10 !border !border-dashed !border-current/70 !text-current/70;
+    }
+}
